@@ -70,7 +70,7 @@ class DepressionIndicator():
         if 'total_prob' not in st.session_state:
             st.session_state['total_prob'] = 0
 
-        user_text = st.text_input('Enter Here or Q to quit: ').lower()
+        user_text = st.text_area('Enter Here or Q to quit: ').lower()
         if user_text == "q":
             st.write("Bingo has left the chat...")
             st.session_state.count = 0
