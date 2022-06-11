@@ -106,16 +106,17 @@ class DepressionIndicator():
         q3 = st.slider("Feeling bad about yourself: ",0,3,0)
         q4 = st.slider("Feeling tired or having little energy: ",0,3,0)
         q5 = st.slider("Thoughts that you would be better off dead, or of hurting yourself: ",0,3,0)
-        st.subheader("Result:")
 
-        y_pred2 = self.model2.predict([[q1,q2,q3,q4,q5]])
+        if st.button('Check result'):
+            st.subheader("Result:")
+            y_pred2 = self.model2.predict([[q1,q2,q3,q4,q5]])
 
-        if y_pred2==1:
-            st.subheader("You have a Severe Depression")
-            st.write(severe_suggestion)
-        else:
-            st.subheader("You have a Mild Depression")
-            st.write(mild_suggestion)
+            if y_pred2==1:
+                st.subheader("You have a Severe Depression")
+                st.write(severe_suggestion)
+            else:
+                st.subheader("You have a Mild Depression")
+                st.write(mild_suggestion)
 
     def predict(self, text):
         clean = clean_text(text)
