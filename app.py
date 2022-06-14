@@ -7,7 +7,7 @@ st.set_page_config(page_title=" Depression Indicator App", page_icon=":pill:", l
 st.markdown("""
 # Depression Indicator App :hospital:
 
-This app is designed to...
+This app is designed to detect depression through text mining and classify whether a person is having mild or severe depression based on their symptoms and behaviors.
 
 """)
 

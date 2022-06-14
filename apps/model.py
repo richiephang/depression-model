@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pickle
 import numpy as np
@@ -72,18 +71,21 @@ class DepressionIndicator():
 
         user_text = st.text_area('Enter Here or Q to quit: ').lower()
         if user_text == "q":
+            st.write('Overall Probability:', st.session_state['total_prob'] / st.session_state.count)
             st.write("Bingo has left the chat...")
-            st.session_state.count = 0
-            st.session_state['total_prob'] = 0
+            # st.session_state.count = 0
+            # st.session_state['total_prob'] = 0
+            if st.session_state['total_prob'] / st.session_state.count>0.5:
+                self.classify_depression()
+
 
         elif user_text:
             st.session_state.count += 1       
             prob = self.predict(user_text)
             st.write("Probability:", prob)
             st.session_state['total_prob'] += prob
-            st.write('Overall Probability:', st.session_state['total_prob'] / st.session_state.count)
-            if prob>0.5:
-                self.classify_depression()
+            # st.write('Overall Probability:', st.session_state['total_prob'] / st.session_state.count)
+
  
     def classify_depression(self):
         mild_suggestion="**Suggestion 1: Exercise**  \n- There is strong evidence that any kind of regular exercise is one of the best antidepressants.  \n- Exercise helps to lower symptoms of anxiety, improve sleep quality, and boost energy levels.  \n  \n**Suggestion 2: Gratitude**  \n - Expressing gratitude has been shown to have a positive emotional effect on people with depression  \n- What you appreciate in your life can increase activity in the medial prefrontal cortex, the brain region often associated with depression.  \n  \n**Suggestion 3: Social connection**  \n- Join a group devoted to something for which you have a strong passion.  \n- For instance, volunteering for a favorite cause can keep you connected with others on a regular basis, plus you have the extra motivation to engage because of your personal interest."
@@ -101,22 +103,25 @@ class DepressionIndicator():
         st.text("")
         st.text("")
         st.text("")
-        q1 = st.slider("Little interest or pleasure in doing things: ",0,3,0)
-        q2 = st.slider("Feeling down, depressed, or hopeless: ",0,3,0)
-        q3 = st.slider("Feeling bad about yourself: ",0,3,0)
-        q4 = st.slider("Feeling tired or having little energy: ",0,3,0)
-        q5 = st.slider("Thoughts that you would be better off dead, or of hurting yourself: ",0,3,0)
 
-        if st.button('Check result'):
-            st.subheader("Result:")
-            y_pred2 = self.model2.predict([[q1,q2,q3,q4,q5]])
+        with st.form("my_form"):
+            q1 = st.slider("Little interest or pleasure in doing things: ",0,3,0)
+            q2 = st.slider("Feeling down, depressed, or hopeless: ",0,3,0)
+            q3 = st.slider("Feeling bad about yourself: ",0,3,0)
+            q4 = st.slider("Feeling tired or having little energy: ",0,3,0)
+            q5 = st.slider("Thoughts that you would be better off dead, or of hurting yourself: ",0,3,0)
 
-            if y_pred2==1:
-                st.subheader("You have a Severe Depression")
-                st.write(severe_suggestion)
-            else:
-                st.subheader("You have a Mild Depression")
-                st.write(mild_suggestion)
+            submitted = st.form_submit_button("Check result")
+            if submitted:
+                st.subheader("Result:")
+                y_pred2 = self.model2.predict([[q1,q2,q3,q4,q5]])
+
+                if y_pred2==1:
+                    st.subheader("You have a Severe Depression")
+                    st.write(severe_suggestion)
+                else:
+                    st.subheader("You have a Mild Depression")
+                    st.write(mild_suggestion)
 
     def predict(self, text):
         clean = clean_text(text)
