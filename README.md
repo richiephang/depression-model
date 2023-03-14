@@ -2,7 +2,7 @@ Welcome to Depression Indicator App.
 <br/> 
 This is a simple depression detector based on text input.
 <br/> 
-live demo: 
+App is deployed on streamlit: 
 https://richiephang-depression-model-app-heolpi.streamlit.app/
 
 <br/> 
