@@ -8,6 +8,6 @@ https://richiephang-depression-model-app-heolpi.streamlit.app/
 <br/> 
 <br/> 
 
-This is a group assignment for WID3006 Machine Learning.
+This is a group assignment for Machine Learning subject.
 <br/> 
 Feel free to look at the ML_FinalReport_BruhCode.pdf to have more information on the model.
